@@ -16,6 +16,7 @@
 
         <junit.version>5.9.1</junit.version>
         <resteasy.version>6.2.2.Final</resteasy.version>
+        <undertow.version>2.3.2.Final</undertow.version>
     </properties>
 
     <dependencies>
@@ -51,18 +52,35 @@
             <version>${resteasy.version}</version>
             <scope>test</scope>
         </dependency>
+        <!--
+         resteasy-undertow 6.2.2.Final depends on an old undertow 2.2.20 that still used deprecated servlet classes
+         that where removed in 6.0.0... we fix all of that by hand here ;-(
+        -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-undertow</artifactId>
             <version>${resteasy.version}</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>undertow-servlet-jakarta</artifactId>
+                    <groupId>io.undertow</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <version>5.0.0</version>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-core</artifactId>
+            <version>${undertow.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-servlet</artifactId>
+            <version>${undertow.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>io.smallrye.config</groupId>
             <artifactId>smallrye-config</artifactId>
