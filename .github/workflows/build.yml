@@ -6,6 +6,9 @@ on:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        profile: [ resteasy, jetty ]
     runs-on: ubuntu-latest
 
     steps:
@@ -16,4 +19,4 @@ jobs:
         java-version: 17
         cache: 'maven'
 
-    - run: mvn --batch-mode --show-version --no-transfer-progress -DCI=GitHub install
+    - run: mvn --batch-mode --show-version --no-transfer-progress -DCI=GitHub install -P${{ matrix.profile }}

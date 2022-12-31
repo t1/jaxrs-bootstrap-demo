@@ -15,8 +15,6 @@
         <maven.compiler.source>17</maven.compiler.source>
 
         <junit.version>5.9.1</junit.version>
-        <resteasy.version>6.2.2.Final</resteasy.version>
-        <undertow.version>2.3.2.Final</undertow.version>
     </properties>
 
     <dependencies>
@@ -44,47 +42,6 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-core</artifactId>
-            <version>${resteasy.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!--
-         resteasy-undertow 6.2.2.Final depends on an old undertow 2.2.20 that still used deprecated servlet classes
-         that where removed in 6.0.0... we fix all of that by hand here ;-(
-        -->
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-undertow</artifactId>
-            <version>${resteasy.version}</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>undertow-servlet-jakarta</artifactId>
-                    <groupId>io.undertow</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.undertow</groupId>
-            <artifactId>undertow-core</artifactId>
-            <version>${undertow.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.undertow</groupId>
-            <artifactId>undertow-servlet</artifactId>
-            <version>${undertow.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>io.smallrye.config</groupId>
-            <artifactId>smallrye-config</artifactId>
-            <version>3.1.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -119,4 +76,87 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>resteasy</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <resteasy.version>6.2.2.Final</resteasy.version>
+                <undertow.version>2.3.2.Final</undertow.version>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.resteasy</groupId>
+                    <artifactId>resteasy-core</artifactId>
+                    <version>${resteasy.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <!--
+                 resteasy-undertow 6.2.2.Final depends on an old undertow 2.2.20 that still used deprecated servlet classes
+                 that where removed in 6.0.0... we fix all of that by hand here ;-(
+                -->
+                <dependency>
+                    <groupId>org.jboss.resteasy</groupId>
+                    <artifactId>resteasy-undertow</artifactId>
+                    <version>${resteasy.version}</version>
+                    <scope>test</scope>
+                    <exclusions>
+                        <exclusion>
+                            <artifactId>undertow-servlet-jakarta</artifactId>
+                            <groupId>io.undertow</groupId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+                <dependency>
+                    <groupId>io.undertow</groupId>
+                    <artifactId>undertow-core</artifactId>
+                    <version>${undertow.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>io.undertow</groupId>
+                    <artifactId>undertow-servlet</artifactId>
+                    <version>${undertow.version}</version>
+                    <scope>test</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>io.smallrye.config</groupId>
+                    <artifactId>smallrye-config</artifactId>
+                    <version>3.1.1</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>jersey</id>
+            <properties>
+                <jersey.version>3.1.0</jersey.version>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.glassfish.jersey.containers</groupId>
+                    <artifactId>jersey-container-jetty-http</artifactId>
+                    <version>${jersey.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.glassfish.jersey.inject</groupId>
+                    <artifactId>jersey-cdi2-se</artifactId>
+                    <version>${jersey.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                    <version>1.4.5</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>

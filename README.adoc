@@ -1,3 +1,5 @@
-= JAX-RS Bootstrap Demo
+= JAX-RS Bootstrap Demo         image:https://github.com/t1/jaxrs-bootstrap-demo/actions/workflows/build.yml/badge.svg[link=https://github.com/t1/jaxrs-bootstrap-demo/actions/workflows/build.yml]
 
 https://jakarta.ee/specifications/restful-ws/3.1/jakarta-restful-ws-spec-3.1.html[Jakarta EE REST 3.1] (f.k.a JAX-RS) https://blog.payara.fish/whats-new-in-jakarta-rest-3.1-in-jakarta-ee-10[introduced] a new Java SE Bootstrap API. This is a quick demo on how to use it in ITs.
+
+There are two profiles `resteasy` and `jersey` with different test dependencies (and that's the ugly part).
