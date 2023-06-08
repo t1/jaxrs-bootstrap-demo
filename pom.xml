@@ -85,7 +85,7 @@
             </activation>
             <properties>
                 <resteasy.version>6.2.4.Final</resteasy.version>
-                <undertow.version>2.3.6.Final</undertow.version>
+                <undertow.version>2.3.7.Final</undertow.version>
             </properties>
             <dependencies>
                 <dependency>
