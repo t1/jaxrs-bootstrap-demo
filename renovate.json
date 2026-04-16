@@ -3,6 +3,9 @@
   "extends": [
     "config:base"
   ],
+  "maven": {
+    "mavenOptions": "-Presteasy,jersey"
+  },
   "packageRules": [
     {
       "description": "Automerge non-major updates",
